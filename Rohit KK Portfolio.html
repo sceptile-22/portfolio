@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rohit KK | Portfolio</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #7657F6;
+      --primary-glow: rgba(118, 87, 246, 0.45);
+      --secondary: #E8E2FF;
+      --bg-dark: #0a0814;
+      --surface-card: rgba(22, 17, 43, 0.7);
+      --surface-border: rgba(118, 87, 246, 0.25);
+      --text-main: #f8fafc;
+      --text-muted: #a5b4fc;
+      --gradient-text: linear-gradient(135deg, #ffffff 20%, #E8E2FF 60%, #7657F6 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    canvas#stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 8, 20, 0.8);
+      border-bottom: 1px solid var(--surface-border);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 8%;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .btn-connect-nav {
+      background: var(--primary);
+      color: white !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      box-shadow: 0 0 15px var(--primary-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-connect-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(118, 87, 246, 0.8);
+    }
+
+    /* Container & Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      margin: 0.8rem auto 0;
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      padding-top: 5rem;
+    }
+
+    .hero-content {
+      flex: 1.2;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      background: rgba(118, 87, 246, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.8rem;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px var(--primary-glow);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(118, 87, 246, 0.7);
+    }
+
+    .btn-secondary {
+      background: rgba(232, 226, 255, 0.08);
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      border: 1px solid var(--surface-border);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(232, 226, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    /* Animated Hero Star Graphics */
+    .hero-graphic {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .star-glow-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ambient-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      filter: blur(25px);
+      animation: pulse 4s infinite alternate;
+    }
+
+    .svg-star {
+      width: 220px;
+      height: 220px;
+      animation: rotateStar 20s linear infinite;
+      filter: drop-shadow(0 0 20px var(--primary));
+    }
+
+    @keyframes rotateStar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0.9; }
+    }
+
+    /* About Section */
+    .about-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+      max-width: 900px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-card p {
+      font-size: 1.15rem;
+      color: #d1d5db;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-badge {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      padding: 1.4rem;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .skill-badge:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--primary-glow);
+    }
+
+    .skill-badge i {
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+
+    .skill-badge span {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 18px;
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px var(--primary-glow);
+    }
+
+    .concept-tag {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: rgba(232, 226, 255, 0.1);
+      color: var(--secondary);
+      border: 1px solid var(--surface-border);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: #ffffff;
+    }
+
+    .project-card p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-pill {
+      background: rgba(118, 87, 246, 0.15);
+      color: var(--secondary);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    /* Learning Journey Timeline */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--surface-border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 20px;
+      top: 5px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .timeline-content {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 1.8rem;
+    }
+
+    .timeline-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      color: var(--secondary);
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-list {
+      list-style-type: none;
+    }
+
+    .timeline-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .timeline-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    /* Contact Section */
+    .contact-wrapper {
+      background: linear-gradient(135deg, var(--primary) 0%, #4f39b6 100%);
+      border-radius: 24px;
+      padding: 4rem 2rem;
+      text-align: center;
+      box-shadow: 0 15px 40px var(--primary-glow);
+    }
+
+    .contact-wrapper h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .contact-wrapper p {
+      color: var(--secondary);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .btn-mail {
+      background: #ffffff;
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      padding: 1rem 2.2rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-mail:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-circle:hover {
+      background: #ffffff;
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(118, 87, 246, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding-top: 8rem;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .timeline::before {
+        left: 20px;
+      }
+      .timeline-marker {
+        left: 10px;
+      }
+      .timeline-item {
+        padding-left: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particle Animation -->
+  <canvas id="stars"></canvas>
+
+  <!-- Navigation -->
+  <header>
+    <a href="#" class="logo">Rohit<span>.</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact" class="btn-connect-nav">Let's Connect</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <div class="container">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="badge"><i class="fa-solid fa-graduation-cap"></i> First-Year B.Tech CSE (AI & ML) @ VIT Vellore</div>
+          <h1>Hi, I'm Rohit KK.<br>I build things with code.</h1>
+          <p class="hero-tagline">Student • Builder • Curious mind</p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-main"><i class="fa-solid fa-code"></i> View Projects</a>
+            <a href="#contact" class="btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="hero-graphic">
+          <div class="star-glow-container">
+            <div class="ambient-glow"></div>
+            <!-- Animated Abstract Purple Star SVG -->
+            <svg class="svg-star" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 0 L125 75 L200 100 L125 125 L100 200 L75 125 L0 100 L75 75 Z" fill="url(#starGradient)"/>
+              <defs>
+                <linearGradient id="starGradient" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#E8E2FF"/>
+                  <stop offset="50%" stop-color="#7657F6"/>
+                  <stop offset="100%" stop-color="#3b1f9c"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- About Me Section -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-card">
+          <p>
+            I'm a first-year CSE (AI & ML) student at VIT Vellore. I'm building a strong foundation in programming and problem-solving while exploring web development and machine learning. This portfolio is my space to document progress and show what I'm creating.
+          </p>
+          <p>
+            I enjoy turning ideas into useful projects, understanding how technology works, and sharing what I learn along the way.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Skills & Interests</h2>
+        <div class="skills-grid">
+          <div class="skill-badge"><i class="fa-brands fa-python"></i><span>Python</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-diagram-project"></i><span>DSA</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-brain"></i><span>AI & Machine Learning</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-code"></i><span>Web Development</span></div>
+          <div class="skill-badge"><i class="fa-brands fa-github"></i><span>Git & GitHub</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-puzzle-piece"></i><span>Problem Solving</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-lightbulb"></i><span>Creative Thinking</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-book-open"></i><span>Continuous Learning</span></div>
+          <div class="skill-badge"><i class="fa-solid fa-users"></i><span>Teamwork</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+          
+          <div class="project-card">
+            <span class="concept-tag">Idea</span>
+            <div>
+              <h3>Student Productivity Hub</h3>
+              <p>A dashboard designed for organizing assignments, deadlines, and study sessions in one unified interface.</p>
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">HTML</span>
+              <span class="tech-pill">CSS</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">UI Design</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <span class="concept-tag">Idea</span>
+            <div>
+              <h3>AI Study Companion</h3>
+              <p>An application concept that processes notes into summaries and revision questions using intelligent text parsing.</p>
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">AI Concepts</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <span class="concept-tag">Idea</span>
+            <div>
+              <h3>Social Media Insights</h3>
+              <p>A dashboard for tracking content performance and engagement trends to reveal actionable analytics.</p>
+            </div>
+            <div class="project-tech">
+              <span class="tech-pill">Data Analysis</span>
+              <span class="tech-pill">Charts</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning Journey Section -->
+    <section id="journey">
+      <div class="container">
+        <h2 class="section-title">Learning Journey</h2>
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">NOW — YEAR 1</h3>
+              <ul class="timeline-list">
+                <li>Practising programming fundamentals.</li>
+                <li>Learning data structures & algorithms.</li>
+                <li>Getting comfortable with Git and GitHub.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">NEXT</h3>
+              <ul class="timeline-list">
+                <li>Building small applications and functional prototypes.</li>
+                <li>Documenting development processes and learnings.</li>
+                <li>Seeking feedback and iterating on projects.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">LONG TERM</h3>
+              <ul class="timeline-list">
+                <li>Exploring AI and deep learning architectures.</li>
+                <li>Developing production-grade data & machine-learning skills.</li>
+                <li>Building products that solve real-world problems.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-wrapper">
+          <h2>Let's Connect</h2>
+          <p>I'm always open to discussing new project ideas, tech opportunities, or just having a chat about code.</p>
+          <div class="contact-actions">
+            <a href="mailto:rohitkrishnakumar.22@gmail.com" class="btn-mail">
+              <i class="fa-solid fa-envelope"></i> Say Hello
+            </a>
+            <div class="social-links">
+              <a href="https://github.com/sceptile-22" target="_blank" rel="noopener noreferrer" class="social-circle" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/rohit-kk-/" target="_blank" rel="noopener noreferrer" class="social-circle" title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Rohit KK. Designed with precision & curiosity.</p>
+    </div>
+  </footer>
+
+  <!-- Script for Canvas Ambient Particle Starfield -->
+  <script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const count = 50;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 1.6 + 0.4;
+        this.color = Math.random() > 0.4 ? '#7657F6' : '#E8E2FF';
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.alpha = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
